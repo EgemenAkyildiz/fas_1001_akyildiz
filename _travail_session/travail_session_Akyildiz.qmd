@@ -14,7 +14,6 @@ editor: visual
 ## Résultats
 
 # Conclusion
----
 
 ## Quarto
 
