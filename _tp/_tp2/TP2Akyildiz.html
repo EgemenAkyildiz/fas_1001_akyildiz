@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Egemen Akyildiz">
+<meta name="dcterms.date" content="2024-02-05">
+
+<title>TP2:Étude de l’effet de la satisfaction démocratique sur le niveau de participation à des organismes politiques (Option 2).</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="TP2Akyildiz_files/libs/clipboard/clipboard.min.js"></script>
+<script src="TP2Akyildiz_files/libs/quarto-html/quarto.js"></script>
+<script src="TP2Akyildiz_files/libs/quarto-html/popper.min.js"></script>
+<script src="TP2Akyildiz_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="TP2Akyildiz_files/libs/quarto-html/anchor.min.js"></script>
+<link href="TP2Akyildiz_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="TP2Akyildiz_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="TP2Akyildiz_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="TP2Akyildiz_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="TP2Akyildiz_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">TP2:Étude de l’effet de la satisfaction démocratique sur le niveau de participation à des organismes politiques (Option 2).</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Egemen Akyildiz </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 5, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Il y a eu deux élections au Canada au niveau fédéral en 2019 et en 2021. Dans les deux cas, le premier ministre sortant Justin Trudeau les a emporté. À l’aide de deux sondages trouvés sur le site web Odesi.ca qui ont eu lieu durant les deux campagnes électorales nous allons nous poser une question. Le niveau de satisfaction avec la démocratie au Canada et le niveau de participation politique, plus précisément le volontariat ou l’association aux groupes ou organisations a-t-il un lien? En d’autres mots, le niveau de satisfaction avec la démocratie affecte-t-il la participation politique autre que le vote.</p>
+<p>C’est une possible corrélation que nous pourrions trouver intéressant d’étudier de plus près. Dans toutes les démocraties du monde, les citoyens sont de moins en moins positifs au sujet de ce type de régime. Une certaine désillusion face au modèle démocratique règne. Ce manque de satisfaction pourrait mener à une plus faible participation politique, ce qui augmenterait aussi le manque de confiance envers le modèle démocratique. Il se pourrait qu’il y ait un cercle vicieux, et nous désirons analyser le potentiel d’existence de ce lien.</p>
+<p>Les données que nous allons utiliser viennent comme nous l’avons dit plus haut de deux sondages élaborés durant les campagnes de chaque élection, 2019 et 2021. Ces sondages viennent d’Élections Canada, agence non-partisane de l’État. Les réponses récoltés dans ces sondages seront utilisées. Nous avons utilisé deux sondages pour pouvoir avoir un plus grand nombre de répondants. Malgré le fait que les sondages ont été fait à deux ans d’écart, nous estimons pour simplifier les choses qu’il ne s’est pas passé d’évènements assez important au sujet de la démocratie. Nous rappelons que l’évènement du freedom convoy s’est déroulé en 2022.</p>
+</section>
+<section id="données-et-méthode" class="level2">
+<h2 class="anchored" data-anchor-id="données-et-méthode">Données et méthode</h2>
+<p>Les données de sondage sont de type catégoriel. Les deux sondages ont un très grand nombre de participants. Il y a dans le premier sondage, celui de 2019, 37822 répondants et 633 variables. Le deuxième sondage de l’élection de 2021 a un total de 20968 répondants et 1090 variables. Les variables catégorielles que nous avons extrait des deux sondages sont de type ordinal et exactement les mêmes. La variable satisfaction a 5 réponses possibles comme suit: 1 = Très satisfait, 2 = Assez satisfait, 3 = Pas très satisfait, 4 = Insatisfait, 5 = Je ne sais pas/ne veux pas répondre. La variable participation, qui demande le niveau de participation dans les douzes derniers mois, a les suivantes: 1 = Jamais, 2 = Une fois, 3 = Quelques fois, 4 = Plus de cinq fois, 5 = Je ne sais pas/ne veux pas répondre. Bien évidemment, le sondage canadien a été fait en anglais mais nous prenons la liberté de traduire les termes en français dès maintenant.</p>
+<p>Parlons maintenant du processus de nettoyage, uniformisation et ainsi de suite. Tout d’abord nous avons téléchargé les bibliothèque “dplyr” et “ggplot2”, le premier pour certaines commandes que nous ne pouvions pas nous en passer, la deuxième pour la création de notre graphique.</p>
+<p>Ensuite nous avons téléchargé les bases de données que nous avions ultérieurement placé dans le fichier du tp2. La commande “read.csv” a été mobilisé à cette fin pour nos deux bases de données.</p>
+<p>Les deux bases de données téléchargé sur Rstudio, nous avons modifié quelques données. Nous avons changé les noms des variables à l’aide de la commande “rename” pour qu’elles ne soient pas que des lettres et chiffres sans sens. Et nous avons supprimé la réponse 5 des deux variables avec la commande “filter” car elles ne nous aidaient pas dans l’élaboration du travail. Ce sont des valeurs que l’on pourrait qualifier de polluante. Et nous nous sommes assuré avec la commande “na.omit()” qu’il ne se trouvait plus de lignes avec des valeurs manquantes en les supprimant. Tout cela pour nos deux bases de données.</p>
+<p>Ensuite nous avons combiné nos deux bases dans une seule avec la commande “bind.rows()” qui fusionnent les lignes des deux bases de données.</p>
+<p>Par la suite, nous avons transformé nos variables ordinales en variables numériques afin d’aider à la fabrication de notre graphique grâce à la commande “mutate()” et “as.numeric”. Ceci est utile dans l’éventualité que nous voulons faire des calculs d’analyse. Nous avons bien entendu appliqué la commande “filter()” pour nous assurer qu’il n’y avait pas de lignes avec des valeurs manquantes, ce qui pourrait ruiner notre résultat.</p>
+<p>Ensuite pour pouvoir créer un graphique le plus lisible possible, nous avons créer une nouvelle colonne dans notre base de données qui lie les valeurs numériques de la variable “satisfaction” aux terme décrits plus tôt: “Très satisfait”, “Assez satisfait” et ainsi de suite. Tout cela avec la commande “factor()”, et les arguments “levels()”, reliés aux chiffres et “labels()” reliées aux étiquettes. De plus, nous avons aussi utilisé “participation_labels &lt;- c()” pour créer un vecteur qui lie les étiquettes de la variable participation (Jamais, Une fois etc.) pour pouvoir éclaircir notre graphique fait avec ggplot2 en étiquetant les chiffres de la variable “participation” dans la légende.</p>
+</section>
+<section id="résultats-et-graphique" class="level2">
+<h2 class="anchored" data-anchor-id="résultats-et-graphique">Résultats et graphique</h2>
+<p><img src="graphiqueTP2.png" class="img-fluid"></p>
+<p>Les résultats ne sont pas très impressionants. Nous voulons tout d’abord mentionner le nombre d’observations dans chaque base et le nombre de variable. La base de données de 2019 après nettoyage contient 9675 observations et 2 variables tandis que celle de 2021 contient 19804 observations et 2 variables. Bien entendu, les 2 variables sont les mêmes dans les deux cas. Nous avions supprimé la cinquième réponse de chaque variable des deux bases. La base de données combinée a un total de 29479 observations avec 3 variables. Il est important de noter que la troisième variable n’est qu’une version en mots de la variable “satisfaction”, ce qui nous était utile pour le graphique. Donc nous pouvons tout juste dire qu’en réalité nous n’avons que deux variables pour la base de données combiné, que nous avons nommé “combined_data”. Les variables viennent des sondages élaborés par Élections Canada durant les campagnes présidentielles.</p>
+<p>Comme nous pouvons le voir dans le graphique la plus grande part des répondants sont assez satisfaits avec la démocratie au Canada. Mais le fait que le nombre de gens très satisfaits de la démocratie soit aussi proche du nombre de gens qui ne sont pas du tout satisfait est très inquiétant pour le futur de notre pays. Le deuxième plus grand nombre d’observations vient des gens qui ne sont pas très satisfaits, encore un mauvais présage. Le nombre de gens qui n’ont pas du tout participé à un organisme politique est largement majoritaire au reste. Extrêmement peu de gens n’ont participé qu’une seule fois. Et il se trouve que le nombre de gens qui y ont participé quelques fois à cinq fois et plus est très similaire. Proportionnellement parlant, le graphique nous montre que le niveau de participation politique est relativement le même pour tout les niveaux de satisfaction. Ceci est plutôt étonnant. Nous nous attendions à une corrélation claire est nette mais nous ne l’avons pas obtenu.</p>
+<section id="annexe" class="level3">
+<h3 class="anchored" data-anchor-id="annexe">Annexe</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.3.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.3.2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data_2019 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp2/data2019.csv"</span>) <span class="co">#data 2019</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data_2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp2/data2021.csv"</span>) <span class="co">#data 2021</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data_2019_clean <span class="ot">&lt;-</span> data_2019 <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">select</span>(pes19_dem_sat, cps19_volunteer   ) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">satisfaction =</span> pes19_dem_sat, <span class="at">participation =</span> cps19_volunteer) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(satisfaction <span class="sc">!=</span> <span class="st">"5"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(participation <span class="sc">!=</span> <span class="st">"5"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_2021_clean <span class="ot">&lt;-</span> data_2021 <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(cps21_demsat   , cps21_volunteer) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">satisfaction =</span> cps21_demsat,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">participation =</span> cps21_volunteer) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(satisfaction <span class="sc">!=</span> <span class="st">"5"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(participation <span class="sc">!=</span> <span class="st">"5"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data_2019_clean, data_2021_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> combined_data <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">satisfaction =</span> <span class="fu">as.numeric</span>(satisfaction),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">participation =</span> <span class="fu">as.numeric</span>(participation)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(satisfaction) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(participation))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>satisfaction_label <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_data<span class="sc">$</span>satisfaction,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Très satisfait"</span>, <span class="st">"Assez satisfait"</span>, <span class="st">"Pas très satisfait"</span>, <span class="st">"Pas du tout satisfait"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>participation_labels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jamais"</span>, <span class="st">"Une fois"</span>, <span class="st">"Quelques fois"</span>, <span class="st">"Plus de cinq fois"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> satisfaction_label, <span class="at">fill =</span> <span class="fu">as.factor</span>(participation))) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relation entre satisfaction et participation"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Satisfaction"</span>, </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Participation"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="st">"red"</span>),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> participation_labels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="bibliographie" class="level3">
+<h3 class="anchored" data-anchor-id="bibliographie">Bibliographie</h3>
+<p>Stephenson, Laura B; Harell, Allison; Rubenson, Daniel; Loewen, Peter John, 2023, “Canadian Election Study, 2019, Online Survey”,&nbsp;<a href="https://doi.org/10.5683/SP3/ZRKSXR" class="uri">https://doi.org/10.5683/SP3/ZRKSXR</a>, Borealis, V2, UNF:6:PvSkyvOctOxYqVwksoED0Q== [fileUNF]</p>
+<p>Stephenson, Laura B.; Harrell, Allison; Rubenson, Daniel; Loewen, Peter John, 2023, “Canadian Election Study 2021”,&nbsp;<a href="https://doi.org/10.5683/SP3/MMXTFC" class="uri">https://doi.org/10.5683/SP3/MMXTFC</a>, Borealis, V4, UNF:6:Q3Pho0YQeCpw+Q8HVzae9g== [fileUNF]</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
