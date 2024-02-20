@@ -1,0 +1,153 @@
+---
+title: "tp3_analyse_textuelle"
+author: "Egemen Akyildiz"
+format: pdf
+editor: visual
+---
+
+## Introduction
+
+Quels sont les sujets les plus discutés au parlement par les différents partis, et ces sujets de discussion sont-ils ceux auxquels on attribue le plus fréquemment ces partis politiques, notamment l'immigration, le marché de l'immobilier, l'environnement et la criminalité ? Pour ce faire, nous allons utiliser la base de données du LIPAD, qui regroupe les discours parlementaires de 1901 à 2019 au niveau fédéral. Cette base de données sera analysée avec le Lexicoder, outil développé par des chercheurs canadiens qui consiste en fait en un dictionnaire de mots-clés permettant d'analyser le contenu des discours selon la fréquence des mots-clés que les partis politiques et leurs représentants utilisent.
+
+Cette question de recherche est importante selon nous, car les sujets que les partis politiques abordent dans leurs débats reflètent leurs idéologies, et donc celles de leurs électeurs, selon le paradigme de l'école de Michigan. Connaître l'idéologie des électeurs peut en outre permettre aux gouvernements de faire des choix de politiques publiques plus adéquats.
+
+## Les données
+
+Les données que nous utilisons pour cette analyse proviennent du LIPAD, qui contient des transcriptions des débats et discours parlementaires allant de l'année 1901 jusqu'en 2019. Ces transcriptions sont associées au parti politique, à l'orateur, à l'année, au genre de l'interlocuteur, à la date du discours, à la circonscription représentée par l'interlocuteur (qui sont des députés) et à d'autres informations moins importantes telles que le sous-sujet du moment. Nous avons rassemblé les données des quatre premiers mois de l'année 2019 en les fusionnant à l'aide de la fonction "bind_rows()". 2019 est l'année la plus récente disponible dans les services du LIPAD. Nous avons sélectionné les variables qui nous intéressent : le parti politique de l'orateur, la date de son discours et bien sûr le contenu du discours grâce à la fonction "select()". De plus, nous avons converti tous les discours en lettres minuscules avec les fonctions "mutate()" et "tolower()" qui font partie de la première. Cela a pour avantage d'uniformiser les discours et ainsi facilite leur lecture par le dictionnaire. De plus, nous avons supprimé les mots inutiles à notre analyse, les "stopwords", ainsi que le mot "speaker" qui apparaît constamment dans les textes. Ceci permet de réduire le volume de nos données, le tout grâce à la fonction "mutate()" et à "removeWords" du package "tm".
+
+Le dictionnaire utilisé est le dictionnaire Lexicoder, développé par Stuart Soroka et ses collègues. Ce dictionnaire anglophone capture les mots-clés des discours de nos parlementaires et les assigne à des catégories de sujets comme "macroéconomie", "relations intergouvernementales", "défense nationale" et bien d'autres. Dans le cadre de ce travail d'analyse, ce dictionnaire est largement suffisant, étant lui-même approfondi et adapté à la politique canadienne. Le Lexicoder est utilisable sur R grâce à la fonction "dictionary()". Ensuite, nous utilisons "run_dictionary()" pour appliquer l'analyse de dictionnaire. Nous combinons les colonnes de nos deux bases de données avec "bind_cols()" et supprimons les variables non pertinentes avec "select()". Ensuite, avec la fonction "mutate", nous regroupons les catégories de variables et les partis politiques ensemble. Enfin, avec la fonction "ggplot", nous créons notre graphique de données.
+
+## Résultats
+
+![](graphique_tp3){width="13cm" height="8.6cm"}
+
+Comme nous pouvons le voir dans le graphique à barre ci-dessus, nos résultats paraissent étranges. Le sujet le plus discuté au Parlement durant les quatres premier mois de l'année 2019 est le crime, chose assez étrange pour un pays comme le Canada réputé pour sa sécurité. Sans surprise sur ce sujet, le parti Conservateur est le plus représenté, près de 20% de leur proportion est au sujet de la criminalité. Le deuxième parti représenté sont les Verts, le parti Libéral et le NPD les suivent de près et le Bloc ne le mentionne que peu.
+
+Le deuxième sujet est l'environnement, qui est comme nous pouvons l'imaginer la prédilection des Verts suivui étrangement par les Conservateurs, alors que le NPD et les libéraux, quasiment égaux ne sont que très peu représentés. Pour le parti de gauche, et connaissant la culture politique du gouvernement Trudeau, ceci n'est pas tout à fait cohérent. Le Bloc est le parti qui s'en soucie le moins.
+
+Très étrangement, l'immigration est le sujet le moins discuté au parlement, et de très loin. Pour un pays tel que le Canada, reconnu pour être une terre d'accueil, ceci est très étrange. Le Bloc Québécois est le parti qui en parle le plus, deux fois plus que tout les autres partis qui sont à peu près au même niveau de proportion à ce sujet. Cette proportion du Bloc peut être à cause de l'inquiétude face à la diminution de la langue française dans la seule province à majorité francophone.
+
+Le logement quant à lui est un sujet sans surprise mentionné beaucoup plus par les néodémocrates, suivis de près par les libéraux mais pratiquement ignoré par les écologistes et encore plus par les conservateurs. Un parti de gauche comme le NDP a bien sûr intérêt à parler du logement, mais par contre le manque de présence du parti écologiste n'est pas très compréhensible. Le manque de présence des conservateurs est quant à lui prévisible, étant traditionnellement le parti de droite au Canada.
+
+Ce sont globalement des sujets que les partis ne mentionnent pas constamment.
+
+## Conclusion
+
+En résumé, nos résultats ne sont pas ceux auxquels nous nous attendions. Le parti Conservateur pour la criminalité ne surprend pas, ni le part Vert pour l'environnement mais le reste de notre graphique est assez inhabituel. Le principal choc vient du fait que l'immigration soit un sujet aussi insignifiant dans la politique d'un État tel que le Canada. La période de temps et le nombre de données utilisées peuvent ne pas avoir été assez élevés. L'analyse textuelle avec un dictionnaire est toutefois une manière très efficace pour analyser une quantité considérable de mots, mais évidemment une lecture de toutes les données, malgré le manque d'efficacité serait beaucoup plus précis.
+
+## Annexe
+
+## Packages
+
+```{r}
+library(quanteda)
+library(clessnverse)
+library(tidyverse)
+library(crayon)
+library(tm)
+```
+
+## Les données
+
+```{r}
+data_2019_01_28 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/1/2019-1-28.csv")
+data_2019_01_29 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/1/2019-1-29.csv")
+data_2019_01_30 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/1/2019-1-30.csv")
+data_2019_01_31 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/1/2019-1-31.csv")
+data_02_01 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-1.csv")
+data_02_04 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-4.csv")
+data_02_05 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-5.csv")
+data_02_06 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-6.csv")
+data_02_07 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-7.csv")
+data_02_08 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-8.csv")
+data_02_19 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-19.csv")
+data_02_20 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-20.csv")
+data_02_21 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-21.csv")
+data_02_22 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-22.csv")
+data_02_25 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-25.csv")
+data_02_26 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-26.csv")
+data_02_27 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-27.csv")
+data_02_28 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/2/2019-2-28.csv")
+data_03_01 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/3/2019-3-1.csv")
+data_03_18 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/3/2019-3-18.csv")
+data_03_19 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/3/2019-3-19.csv")
+data_03_20 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/3/2019-3-20.csv")
+data_03_22 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/3/2019-3-22.csv")
+data_04_01 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-1.csv")
+data_04_02 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-2.csv")
+data_04_03 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-3.csv")
+data_04_04 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-4.csv")
+data_04_05 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-5.csv")
+data_04_08 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-8.csv")
+data_04_09 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-9.csv")
+data_04_10 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-10.csv")
+data_04_11 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-11.csv")
+data_04_12 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-12.csv")
+data_04_29 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-29.csv")
+data_04_30 <- read.csv("C:/Users/Gul/Desktop/UDM_SCI_PO/Hiver_2024/FAS1001/fas_1001_akyildiz/_tp/_tp3/lipad/2019/4/2019-4-30.csv")
+```
+
+```{r}
+##Combinaison des bases de donnees
+data_combined <- bind_rows(data_2019_01_28, data_2019_01_29, data_2019_01_30, data_2019_01_31, data_02_01, data_02_04, data_02_05, data_02_06, data_02_07, data_02_08, data_02_19, data_02_20, data_02_21, data_02_22, data_02_25, data_02_26, data_02_27, data_02_28, data_03_01, data_03_18, data_03_19, data_03_20, data_03_22, data_04_01, data_04_02, data_04_03, data_04_04, data_04_05, data_04_08, data_04_09, data_04_10, data_04_11, data_04_12, data_04_29, data_04_30)
+```
+
+```{r}
+## Nettoyage
+donnees_combinees_nettoyees <- data_combined |>
+  select(speechtext, speakerparty) |>
+  mutate(speechtext = tolower(speechtext)) |>
+  mutate(speechtext = tm::removeWords(speechtext, c(stopwords("en"), "speaker"))) |>
+  na.omit()
+```
+
+## Le dictionnaire
+
+```{r}
+lexicoder <- dictionary(file = "LTDjun2013/policy_agendas_english.lcd", format = "yoshikoder")
+```
+
+## Analyse du dictionnaire et graphique
+
+```{r}
+dictionnaire_analyse <- run_dictionary(data       = donnees_combinees_nettoyees, 
+                    text       = speechtext, 
+                    dictionary = lexicoder) |> 
+  bind_cols(donnees_combinees_nettoyees) |> 
+  select(-c(doc_id,speechtext)) |> 
+  pivot_longer(!speakerparty, names_to = "categorie", values_to="n") |> 
+  ungroup() |> 
+  group_by(speakerparty, categorie) |> 
+  summarise(n=sum(n)) |> 
+  mutate(prop = round(n/sum(n),4)*100,
+         speakerparty = case_when(speakerparty == "Conservative"          ~ "Conservateur",
+                                  speakerparty == "Green Party"           ~ "Vert",
+                                  speakerparty == "New Democratic Party"  ~ "NDP",
+                                  speakerparty == "Liberal"               ~ "Libéral",
+                                  speakerparty == "Bloc Québécois"        ~ "Bloc",
+                                  T ~ as.character(speakerparty)),
+         categorie = case_when(categorie == "environment" ~ "Environnement",
+                               categorie == "crime" ~ "Crime",
+                               categorie == "housing" ~ "Logement",
+                               categorie == "immigration" ~ "Immigration",
+                               T ~ as.character(categorie))) |> 
+  na.omit() |> 
+  filter(categorie %in% c("Environnement", "Crime", "Logement", "Immigration"),
+         speakerparty != "Independent", speakerparty != "") |> 
+  ggplot(aes(x = categorie, y = prop, fill = speakerparty)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual("", values = c("#002395", "#003cff", "#FF0000", "#ff9A00", "#3D9B35")) +
+  labs(x = "Enjeux\n",
+       y = "\nProportion (%)", 
+       title = "Enjeux les plus discutés par les partis") +
+  theme_bw() +
+  theme(title = element_text(size = 17),
+        legend.text = element_text(size = 15),
+        axis.text = element_text(size = 10, color = "black"))
+```
+
+## Bibliographie
+
+Beelen, K., Thijm, T. A., Cochrane, C., Halvemaan, K., Hirst, G., Kimmins, M., Lijbrink, S., Marx, M., Naderi, N., Rheault, L., Polyanovsky, R., and Whyte, T. (2017). "Digitization of the Canadian Parliamentary Debates." *Canadian Journal of Political Science*, 50(3), 849--864. https://doi.org/10.1017/S0008423916001165.
+
+Citation: Albugh, Quinn, Julie Sevenans and Stuart Soroka. 2013. Lexicoder Topic Dictionaries, June 2013 versions, McGill University, Montreal, Canada.
