@@ -1,0 +1,42 @@
+---
+title: "Plan de recherche"
+author: "Egemen Akyildiz"
+format: html
+editor: visual
+---
+
+## Question de recherche et motivation
+
+Le sujet de ce travail de recherche porte sur l'immigration en France et sa perception chez la population française. L'immigration est un sujet complexe et polyvalent qui engendre de nombreuses discussions au sein de la société française. Depuis de nombreuses années, la France joue un rôle majeur dans l'immigration, accueillant des individus venant du monde entier pour des motifs économiques, politiques ou sociaux. Pourtant, la population française a souvent une vision ambivalente ou négative de l'immigration, et peut changer en fonction de divers éléments tels que l'origine des immigrés, leur situation socio-économique, leur religion ou leur culture.
+
+L'objectif de cette étude est d'analyser la manière dont la population française perçoit l'immigration, en se concentrant sur les attitudes, les convictions, les préjugés et les opinions qui influencent les interactions entre les habitants français et les immigrés, ainsi que les interactions interculturelles au sein de la société française. Il est indispensable de saisir ces perceptions afin de fournir des informations sur les politiques d'intégration, de favoriser la cohésion sociale et de relever les défis liés à la diversité culturelle ethnique. Notre hypothèse est que les français ne sont pas très influencés par les messages provoquant des politiciens ou des conférences, comme le montre les résultats de la campagne présidentielle de 2022. Le parti de Zemmour n'obtient que 7% des voix alors que son sujet principal était l'immigration et, plus précisément, les musulmans, alors que Marine Le Pen obtenait une bonne part de ses votes par la classe ouvrière ou prolétaire qui mettait en général en priorité le pouvoir d'achat et l'économie, bien en avant de l'immigration.
+
+Différentes motivations suscitent cette étude. Premièrement, il est important de saisir les attitudes, les préjugés et les stéréotypes envers les immigrés, car ces perceptions peuvent avoir des répercussions significatives sur leur intégration dans la société française. Effectivement, les personnes immigrées confrontées à des préjugés et des discriminations peuvent rencontrer des obstacles pour s'intégrer dans la société d'accueil, ce qui peut avoir des répercussions néfastes sur leur bien-être mental, leur santé mentale et leur réussite socio-économique.
+
+De plus, il est crucial de saisir la manière dont la population française perçoit l'immigration afin de développer des politiques publiques efficaces et inclusives en ce qui concerne l'immigration et l'intégration. Les politiciens doivent saisir les attitudes et les perceptions de la population afin de formuler des politiques qui satisfassent les besoins et les préoccupations de tous les individus de leur communauté.
+
+L'objectif de cette étude est de comprendre comment la population française perçoit l'immigration, notamment en ce qui concerne les immigrés d'origine extra-européenne. Pour la recherche, l'objectif est d'analyser les attitudes, les préjugés et les stéréotypes envers les immigrés, ainsi que les éléments qui impactent ces perceptions.
+
+Plus spécifiquement, l'objectif de cette étude est d'analyser les opinions de la population française concernant les immigrés en se basant sur leur origine, leur statut socio-économique, leur religion et leur culture. L'objectif de cette étude est aussi d'analyser les éléments qui impactent ces perceptions, comme l'exposition aux médias, les convictions politiques et les valeurs culturelles associées.
+
+## Données et méthodes
+
+Afin d'atteindre cet objectif, la combinaison de sondages français sera utilisée dans le but de collecter des données quantitatives sur le sujet, et d'une base de données monstrueusement grande, l'INSEE ou l'institut national de la statistique et des études économiques. Nous allons aussi utiliser des données de sondages du Baromètre YouGov France, qui mesure l'opinion des français face aux partis politiques. Ceci est important pour nous car nous pourrions juger l'opinion des français selon leur vote, ou plutôt leur parti préféré. Une attitude positive pour le Rassemblement National de Marine Le Pen ou pour Reconquête d'Éric Zemmour montrerait sans surprise une attitude négative face aux immigrants ou l'immigration. Les réponses de ces sondages sont de type ordinal et le nombre de répondants est autour de 1000, un nombre assez faible ce qui nous amène à devoir combiner plusieurs sondages de ce type pour obtenir une image plus claire et représentative de la France. Le nombre de variable est autour de 50 pour chaque sondage, se concentrant surtout sur les questions de type boussole électorale sur l'économie, l'écologie, les droits des femmes et autres. Ensuite est demandé la favorabilité des répondants aux partis. Bien sûr, l'âge, le sexe et la région ou le répondant vit est demandé. Toutes les variables sont ordinales sauf la variable région qui est elle nominale. On utilisera la combinaison par ligne car les variables sont les mêmes, donc on utilisera la fonction « bind_rows() ». Au cas ou nous allons utiliser d'autres sondages avec des variables différentes, nous pourrions utiliser la combinaison par colonnes avec la fonction « bind_cols() », ce qui ne ferait que rajouter des variables à notre fiche de données.
+
+### Un example de sondage de YouGov :
+
+![](sondage.png)
+
+Nous allons ensuite analyser deux textes de Macron, lors d'un débat mais aussi lors d'une de ses conférences, et faire passer ce texte par un dictionnaire lexicologique qui nous permettra de repérer les mots mentionnant l'immigration, les minorités et les communautés. Dans le cas du dictionnaire, nous allons utiliser le lexicoder français, mais aussi rajouter des mots plus précis pour le cas de la France comme turc, arabe, terroriste, attentat, communauté, racaille, et d'autres. On enlèvera les « stopwords » pour réduire la taille des textes et faciliter les traitements de données. On utilisera aussi le « stemming » pour ramener les mots à leur racine étymologique, par exemple « terroriste » se verra « stemmizer » « terror » pour prendre en compte les mots qui sont autour du même sujet et surtout les pluriels. De plus, on mettra en minuscule tout le texte pour homogénéiser le format des textes avec la fonction « tolower() » de R afin de ne pas omettre des mots qui se trouveraient en début de phrase ou simplement avec une lettre majuscule comme « Arabie ».
+
+### Extrait d'un discours du Président de la République:
+
+### ![](discours_macron.png)
+
+Bien sûr, nous utiliserons des graphiques pour les deux types d'analyse qu'on va utiliser, sondages et analyse textuelle.
+
+### Bibliographie
+
+https://fr.yougov.com/politics/articles/36802-barometre-yougov-france-le-huffpost-juin-2021
+
+https://www.elysee.fr/front/pdf/elysee-module-750-fr.pdf
