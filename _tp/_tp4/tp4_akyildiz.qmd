@@ -1,0 +1,102 @@
+---
+title: "tp4_akyildiz"
+author: "Egemen Akyildiz"
+format: html
+editor: visual
+---
+
+## Introduction
+
+Nous allons aujourd'hui nous intéresser aux élections fédérales canadiennes de 2019. Pour obtenir les données nécessaires nous avons scrapé des données de la page Wikipedia dédiée à cet élection. Cette page contient les données de plusieurs sondages qui ont collecté l'intention de vote des canadiens pour cette élection. Cette élection est celle qui a donné son deuxième mandat au Premier ministre Justin Trudeau. Mais quelle est la raison par laquelle il a remporté son deuxième mandat? Après plusieurs scandales comme l'affaire SNC-Lavallin et son voyage de luxe aux frais des contribuables il a quand même repris son siège malgré que son parti soit minoritaire au parlementaire. Évidemment, il y a plusieurs raisons possibles pour cela. Nous allons continuer ce travail en assumant que la raison principale des victoires du parti Libéral viennent de la faiblesse de l'autre parti de gauche le NPD. Pour vérifier cette hypothèse nous allons mesurer l'intention de vote pour le parti libéral et néodémocratique, et nous attendre à une relation négative. Un vote que le NPD perd va probablement aller au libéral et certainement pas au parti conservateur vue la différence idéologique.
+
+## Description des variables
+
+Les variables de ce sondage sont assez simple. La première variable est nominale, le nom de l'entreprise qui a donné le sondage. La deuxième variable est le dernier jour que le sondage a été donné et elle est en format de date, sa propre catégorie de variable que nous avons formaté ainsi. Les 6 variables suivantes sont l'intention de vote en pourcentage des différents partis politiques canadiens. Nous les avons transformées en variable numérique pour que le graphique soit juste. La variable suivante est la marge d'erreur, qui montre la potentialité d'erreur qu'il y a entre l'échantillon du sondage et la population canadienne qui va voter pour un seuil probable de 95%; cette variable a été converti en numérique et nous avons enlevé les symboles non nécessaires. Certaines observations de cette sont absentes. La variable qui suit est la taille de l'échantillon, exprimée en valeur numérique, allant de quelques centaines à quelques milliers. Certaines valeurs sont aussi manquantes ici. La variable suivante est la méthode de sondage, qui va du téléphone à la version en ligne, et bien sûr elle est nominale. La dernière variable est l'avance que le parti favori a sur le deuxième plus populaire parti. Nous l'avons transformé en variable numérique pour mieux caractérisé sa fonction de différence de pourcentage.
+
+## Analyse des données
+
+Nous avons créé deux graphiques, l'un montrant tous les partis politiques, l'autre les deux partis qui nous intéressent vraiment, le PLC et le NPD. Le premier graphique nous montre des résultats assez prévisibles. Le parti conservateur et libéral sont en tête et de loin et quasiment se superposent. Les autres partis sont bien en arrière avec le NPD qui a une avance sur les autres, le parti Vert et le Bloc Québécois sont vers la fin de la période presque égales et le nouveau parti de Maxime Bernier est loin derrière. Ceci n'a rien de surprenant, malgré qu'avec une vision rétrospective, nous pouvons remarquer que le Bloc a eu une bien plus grande part du vote et le parti néodémocrate a perdu tout ce que Jack Layton avait gagné pour ce parti.
+
+Le deuxième graphique qui est celui qui nous intéresse le plus montre l'intention de vote entre le NPD et le PLC. Nous pouvons clairement voir que le PLC a une avance entre 15 et 20% durant la campagne électorale. Mais le sujet qui nous intéresse est s'il y a une relation entre les intentions de vote. Nous rappellons que notre hypothèse se résume à ce principe, le vote entre le NPD et le PLC est un jeu à somme nulle, un vote perdu du NPD est un vote pour le PLC, l'inverse n'est sûrement pas exact puisque certains électeurs plus à droite du PLC peuvent voter pour le parti conservateur idéologiquement proche.
+
+Comme nous pouvons le voir, au début de la période les sondages montrent un grand écart entre le NPD et le parti libéral. Le premier est à 15%, l'autre à 32%. Au milieu de la période le NPD est toujours à 15% mais le parti libéral a une légère hausse vers 33%. Mais comme nous pouvons le constater, de grandes fluctuations prennent lieu conjointement à partir du mois d'octobre, quand les votes pour le parti libéral baissent ceux du NPD augmentent ou vice-versa. Mais à la dernière date de sondage que nous avons scrapé, le NPD est à 19% et le parti libéral à 34%. donc au tout début il y avait une différence de 17% entre le NPD et le parti libéral, et à la toute fin une différence de 15%. Ceci pourrait être négligeable si l'on prend en compte les marges d'erreur. Notre hypothèse n'est donc pas nécessairement prouvé. Mais les fluctuations à partir du mois d'octobre qui vont en sens inverse pour les partis nous gardent toujours dubitatif. La différence le 16 octobre n'est autour que de 7-8%. Si nous avions rajouté le Bloc Québécois à notre analyse, nous aurions sûrement eu une analyse plus précise en prenant en compte le vote des québécois qui ont des revendications supplémentaires au reste du Canada.
+
+## Conclusion
+
+Notre hypothèse n'est ni nécessairement réfutée ni prouvée. Cependant nous devrions discuter de la question éthique de la chose. Le webscraping est une pratique utile et relativement efficace pour obtenir des données de site web (Alexander 2023). Mais c'est une pratique qui n'est pas cautionné par le propriétaire de l'information et/ou du site web duquel on l'obtient. Cette personne ou entreprise pourrait très bien ne pas vouloir que l'on se procure ses données à nos fins personnelles. Bien que nous soyons dans un registre académique et non à but lucratif ceci ne nous rend pas moralement juste. Mais dans le cadre de ce travail, nous avons récolté des données de Wikipedia, le plus grand site web gratuit qui offre de l'information au monde entier. Dans un sens, nous n'avons pas nécessairement fait quelque chose de mal sur le plan éthique. Nous aurions pu dans le meilleur des cas obtenir un API des sites de sondage spécifiques, même si cela demanderait beaucoup plus de temps, d'effort et d'argent (Alexander 2023). Au final, nous ne pensons pas avoir été éthiquement injuste, surtout pour une élection qui date de déjà 5 ans.
+
+## Bibliographie
+
+Alexander, Rohan. 2023. *Telling Stories with Data: With Applications in R.* Chapman; Hall/CRC.
+
+## Annexe
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(lubridate)
+library(ggplot2)
+```
+
+```{r}
+Polls_data <- read_html("https://en.wikipedia.org/wiki/Opinion_polling_for_the_2019_Canadian_federal_election") |>
+html_elements("table") |>
+  pluck(2) |>
+  html_table(fill = T) |>
+  rename(Entreprises_de_sondages = "Polling firm",
+         Dernier_jour_de_sondage = "Last dateof polling[1]",
+         Libéral                = "LPC",
+         Conservateur           = "CPC",
+         Néodémocrate           = "NDP",
+         Bloquiste              = "BQ",
+         Verts                  = "GPC",
+         Populaire              = "PPC",
+         Marge_d_erreur         = "Marginof error[2]",
+         Taille_de_l_échantillon = "Samplesize[3]",
+         Méthode_de_sondage      = "Polling method[4]",
+         Favori                   = "Lead" ) |>
+  filter(Entreprises_de_sondages != "") |>
+  slice(-c(1, 3)) |>
+  select(-c(Link)) |>
+  slice(-c(1)) |>
+  mutate(across(c(Marge_d_erreur, Taille_de_l_échantillon, Favori),
+                ~ as.numeric(str_squish(str_replace_all(.x, c("±" = "", "pp" = "", "[:punct:]1[:punct:]4[:punct:]" = "", "," = ""))))),
+         across(c(Conservateur:Populaire, Favori), ~ as.numeric(.x)),
+         Dernier_jour_de_sondage = mdy(Dernier_jour_de_sondage))
+```
+
+```{r}
+glimpse(Polls_data)
+```
+
+```{r}
+ggplot(Polls_data, aes(x = Dernier_jour_de_sondage)) +
+  geom_line(aes(y = Libéral, color = "Libéral")) +
+  geom_line(aes(y = Conservateur, color = "Conservateur")) +
+  geom_line(aes(y = Néodémocrate, color = "Néodémocrate")) +
+  geom_line(aes(y = Bloquiste, color = "Bloquiste")) +
+  geom_line(aes(y = Verts, color = "Verts")) +
+  geom_line(aes(y = Populaire, color = "Populaire")) +
+  labs(title = "Évolution des partis politiques",
+       x = "Date",
+       y = "%") +
+  scale_color_manual(values = c("Libéral" = "red", 
+                                 "Conservateur" = "blue", 
+                                 "Néodémocrate" = "orange", 
+                                 "Bloquiste" = "yellow", 
+                                 "Verts" = "green", 
+                                 "Populaire" = "purple")) +
+  theme(legend.position = "right")
+```
+
+```{r}
+ggplot(Polls_data, aes(x = Dernier_jour_de_sondage)) +
+  geom_line(aes(y = Libéral, color = "Libéral")) +
+  geom_line(aes(y = Néodémocrate, color = "Néodémocrate")) +
+  labs(title = "Évolution des partis politiques",
+       x = "Date",
+       y = "%") +
+  scale_color_manual(values = c("Libéral" = "red",
+                                "Néodémocrate" = "orange")) +
+    theme(legend.position = "right")
+```
